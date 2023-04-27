@@ -24,7 +24,7 @@ public class Hopitalh2Application {
             patientRepository.saveAll(
                     List.of(
                             Patient.builder().name("AYOUB").dob(new Date()).score(242).sick(true).build(),
-                            Patient.builder().name("JAD").dob(new Date()).score(6789).sick(true).build(),
+                            Patient.builder().name("JADO").dob(new Date()).score(6789).sick(true).build(),
                             Patient.builder().name("JUDIA").dob(new Date()).score(76).sick(false).build(),
                             Patient.builder().name("FADZA").dob(new Date()).score(23234).sick(true).build()
 
