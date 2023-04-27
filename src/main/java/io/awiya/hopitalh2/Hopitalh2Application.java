@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -22,10 +23,10 @@ public class Hopitalh2Application {
         return args -> {
             patientRepository.saveAll(
                     List.of(
-                            Patient.builder().name("AYOUB").dob(LocalDate.now()).score(242).sick(true).build(),
-                            Patient.builder().name("JAD").dob(LocalDate.now()).score(6789).sick(true).build(),
-                            Patient.builder().name("JUDIA").dob(LocalDate.now()).score(76).sick(false).build(),
-                            Patient.builder().name("FADZA").dob(LocalDate.now()).score(23234).sick(true).build()
+                            Patient.builder().name("AYOUB").dob(new Date()).score(242).sick(true).build(),
+                            Patient.builder().name("JAD").dob(new Date()).score(6789).sick(true).build(),
+                            Patient.builder().name("JUDIA").dob(new Date()).score(76).sick(false).build(),
+                            Patient.builder().name("FADZA").dob(new Date()).score(23234).sick(true).build()
 
                     ));
             patientRepository.findAll().forEach(System.out::println);
