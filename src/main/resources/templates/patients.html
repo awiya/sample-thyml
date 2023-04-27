@@ -1,49 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html"
+>
 <head>
     <meta charset="UTF-8">
-    <title>List of Patients</title>
-    <!-- Add Bootstrap WebJar CSS -->
-    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
+    <title>Patients</title>
 </head>
 <body>
-<div class="container mt-3">
-    <div class="card">
-        <div class="card-header text-center"><h2>List of Patients</h2></div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Sick</th>
-                    <th>Score</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="patient : ${listPatients}">
-                    <td th:text="${patient.id}"></td>
-                    <td th:text="${patient.name}"></td>
-                    <td th:text="${patient.dob}"></td>
-                    <td th:text="${patient.sick}"></td>
-                    <td th:text="${patient.score}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <ul class="nav nav-pills">
-                <li th:each="page,status:${pages}">
-                    <a th:href="@{/index(page=${status.index})}"
-                       th:class="${currentPage==status.index?'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
-                       th:text="${status.index}+1"></a>
-                </li>
-            </ul>
+<div layout:fragment="content">
+    <div class="p-3">
+        <div class="card">
+            <div class="card-header text-center"><h2>Patient Roster</h2></div>
+            <div class="card-body">
+                <form method="get" th:href="@{index}" class=" d-flex align-items-center justify-content-center">
+                    <div class="form-floating">
+                        <input type="text" class="form-control flex-grow-1" id="keyword" name="keyword"
+                               placeholder="Keyword">
+                        <label for="keyword">Keyword</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary ms-3">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>Date of Birth</th>
+                        <th>Sick</th>
+                        <th>Score</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p:${listPatients}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${p.dob}"></td>
+                        <td th:text="${p.sick}"></td>
+                        <td th:text="${p.score}"></td>
+                        <td>
+                            <a onclick="return confirm('Are you sure?')" class="btn btn-danger"
+                               th:href="@{deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <a class="btn btn-danger"
+                               th:href="@{editPatient(id=${p.id})}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="page,status:${pages}">
+                        <a
+                                th:class="${status.index==currentPage?'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
+                                th:href="@{index(page=${status.index}, keyword=${keyword})}"
+                                th:text="${status.index}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
     </div>
-
-
-    <!-- Add Bootstrap WebJar JS -->
-    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</div>
 </body>
 </html>
