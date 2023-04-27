@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.TemporalType.DATE;
 
 @Entity
 @Data
@@ -21,9 +23,12 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @NotEmpty
+    @Size(min = 4, max = 20)
     private String name;
-    private LocalDate dob;
+    @Temporal(DATE)
+    private Date dob;
     private boolean sick;
+    @Min(10)
     private int score;
-
 }
